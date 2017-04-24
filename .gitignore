@@ -1,0 +1,17 @@
+# Python cache
+*.pyc
+__pychache__
+
+# Virtual environments
+env/
+venv/
+
+# Sqllite
+*.sqlite3
+
+# Local settings
+local_settings.py
+
+#IDE and editors configs
+.vscode/
+.idea/

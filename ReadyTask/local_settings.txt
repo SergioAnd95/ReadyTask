@@ -1,0 +1,12 @@
+DEBUG = True
+
+# Provide settings for database
+# Database settings for Postgresql
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'database_name',
+        'USER': 'database_user',
+        'PASSWORD': 'database_password',
+    }
+}
