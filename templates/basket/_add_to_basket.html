@@ -1,0 +1,5 @@
+
+<form action={% url 'basket:add_task' task.id %} method="POST">
+    {% csrf_token %}
+    <button class="btn btn-primary" type='submit'>Добавить в корзину</button>
+</form>

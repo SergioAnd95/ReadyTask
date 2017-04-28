@@ -40,9 +40,11 @@ INSTALLED_APPS = [
 
     # third-party apps
     'ckeditor',
+    'django_mathjax',
 
     # own apps
     'tasks',
+    'basket',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'basket.middleware.BasketMiddleware',
 ]
 
 ROOT_URLCONF = 'ReadyTask.urls'
@@ -69,7 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
         },
     },
@@ -130,7 +133,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Media files
@@ -167,6 +170,12 @@ CKEDITOR_CONFIGS = {
 
 MATHJAX_ENABLED = True
 MATHJAX_CONFIG_FILE = "TeX-AMS-MML_HTMLorMML"
+
+
+# Basket settings
+
+BASKET_COOKIE_LIFETIME = 604800
+
 
 
 try:
