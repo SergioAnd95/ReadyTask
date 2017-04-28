@@ -23,6 +23,7 @@ class LevelGradute(models.Model):
     def __str__(self):
         return '%s' % self.name
 
+
 class Task(models.Model):
     """Class to represent task model"""
 
@@ -46,6 +47,8 @@ class Task(models.Model):
     level_grad = models.ForeignKey(LevelGradute, verbose_name=_('Класс'), related_name='grad_tasks')
 
     difficult_level = models.IntegerField(_('Уровень сложности'), choices=DIFFICULTY_LEVELS)
+
+    price = models.DecimalField(_('Стоимость'), decimal_places=2, max_digits=12)
 
     class Meta:
         verbose_name = _('Задание')

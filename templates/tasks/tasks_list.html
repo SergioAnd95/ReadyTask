@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load mathjax %}
+{% load basket_tags %}
+
+{% block content %}
+    {% for task in tasks %}
+        <div class="">
+            <p><a href="{% url 'task_detail' task.pk %}">{{ task.name }}</a></p>
+            <div>
+                {% mathjax_scripts %}
+                {{ task.short_description | safe }}
+            </div>
+            <div>
+                {% if not task|basket_task_exist:request.basket %}
+                    {% include 'basket/_add_to_basket.html' with taskt=task.id %}
+                {% else %}
+                    {% include 'basket/_remove_from_basket.html' with taskt=task.id %}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock content %}

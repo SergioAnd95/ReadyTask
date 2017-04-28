@@ -1,0 +1,33 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block page-title %}{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<link href="css/style.css" rel="stylesheet">-->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+        {% block extra_styles %}
+        
+        {% endblock extra_styles %}
+    </head>
+    <body>
+        {% include 'partials/navbar.html' %}
+
+        <div class="container">
+            {% block content %}
+            
+            {% endblock content %}
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        {% block extra_scripts %}
+        
+        {% endblock extra_scripts %}
+    </body>
+</html>
