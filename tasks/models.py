@@ -11,6 +11,10 @@ class Subject(models.Model):
 
     name = models.CharField(_('Название предмета'), max_length=100)
 
+    class Meta:
+        verbose_name = _('Предмет')
+        verbose_name_plural = _('Предметы')
+
     def __str__(self):
         return '%s' % self.name
 
@@ -19,6 +23,10 @@ class LevelGradute(models.Model):
     """Class to represent graduated level model"""
 
     name = models.CharField(_('Класс'), max_length=20)
+
+    class Meta:
+        verbose_name = _('Класс')
+        verbose_name_plural = _('Классы')
 
     def __str__(self):
         return '%s' % self.name
