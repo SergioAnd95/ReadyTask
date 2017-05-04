@@ -1,4 +1,4 @@
 <form action={% url 'basket:remove_task' task.id %} method="POST">
     {% csrf_token %}
-    <button class="btn btn-danger" type='submit'>Удалиь из корзины</button>
+    <button class="btn btn-danger btn_form" type='submit'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 </form>

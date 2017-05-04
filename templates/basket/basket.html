@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if request.basket.lines.all %}
+        {% for line in request.basket.lines.all %}
+            <div class="row">
+                <div class="col-xs-11">
+                    <p><a href="{% url 'task_detail' line.task.pk %}">{{ line.task.name }}</a></p>
+                    <div>
+                        {{ line.task.short_description|safe }}
+                    </div>
+                </div>
+                <div class="col-xs-1">
+
+                    {% include 'basket/_remove_from_basket.html' with task=line.task %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Ваша корзина пуста </p>
+    {% endif %}
+
+{% endblock content %}
