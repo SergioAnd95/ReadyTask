@@ -40,6 +40,8 @@ class Task(models.Model):
     short_description = RichTextField(_('Краткое описание'))
     task_text = RichTextField(_('Описание задания'))
 
+    answer_text = RichTextField(_('Ответ на задание'), null=True, blank=True)
+
     when_created = models.DateTimeField(_('Когда создан'), auto_now_add=True)
     when_updated = models.DateTimeField(_('Когда обновлено'), auto_now=True)
 

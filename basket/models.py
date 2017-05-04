@@ -2,6 +2,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
+
+from decimal import Decimal
 
 # Create your models here.
 
@@ -68,10 +71,18 @@ class Basket(models.Model):
 
     @property
     def total_price(self):
-        total = 0
+        """
+        Propery to provide total price in basket
+        :return: Decimal
+        """
+        total = Decimal('0.00')
         for line in self.lines.all():
             total += line.price
         return total
+
+    @property
+    def total_price_currency(self):
+        return '%s %s' %(self.total_price, settings.CURRENCY[1])
 
 
 class BasketLine(models.Model):
