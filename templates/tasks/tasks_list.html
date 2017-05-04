@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load mathjax %}
-{% load basket_tags %}
 
 {% block content %}
     {% for task in tasks %}
@@ -11,13 +10,47 @@
                 {{ task.short_description | safe }}
             </div>
             <div>
+            {% comment %}
                 {% if not task|basket_task_exist:request.basket %}
-                    {% include 'basket/_add_to_basket.html' with taskt=task.id %}
+                    {% include 'basket/_add_to_basket.html' with task=task %}
                 {% else %}
-                    {% include 'basket/_remove_from_basket.html' with taskt=task.id %}
+                    {% include 'basket/_remove_from_basket.html' with task=task.id %}
                 {% endif %}
+            {% endcomment %}
+
+                {% include 'basket/_add_to_basket.html' with task=task %}
             </div>
         </div>
     {% endfor %}
 
+    {% comment  %} TODO: maket ajax add to basket {% endcomment %}
+
 {% endblock content %}
+
+{% block extra_scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $basket = $('#basket_top');
+            $(".btn_form").on("click", function (e) {
+                e.preventDefault();
+                $parent = $(this).parent();
+                $btn = $(this);
+                var url = $parent.attr('action');
+                var method = $parent.attr('method');
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: $parent.serialize(),
+                    success: function (data) {
+                        $btn.attr('disabled', '');
+                        $basket.text('Корзина '+data);
+                    },
+                    error: function () {
+                        alert('Извините сейчас на сервере небольшие проблемы, перезагрузите страницу или попробуйте позже')
+                    }
+                });
+            })
+        })
+    </script>
+{% endblock extra_scripts %}
