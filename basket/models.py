@@ -29,6 +29,9 @@ class Basket(models.Model):
         verbose_name = _('Корзина')
         verbose_name_plural = _('Корзины')
 
+    def __str__(self):
+        return str(self.id)
+
     def add_task(self, task):
         """
         Add task to basket
@@ -85,10 +88,15 @@ class Basket(models.Model):
         return '%s %s' %(self.total_price, settings.CURRENCY[1])
 
 
+
 class BasketLine(models.Model):
     basket = models.ForeignKey(Basket, verbose_name=_('Корзина') ,related_name='lines')
     task = models.ForeignKey('tasks.Task', verbose_name=('Задание'))
     when_created = models.DateTimeField(_('Дата создание'), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('Строка корзины')
+        verbose_name_plural = _('Строки корзины')
 
     @property
     def price(self):
