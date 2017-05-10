@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
 {% load mathjax %}
 
-{% block content %}
-    {% for task in tasks %}
-        <div class="">
-            <p><a href="{% url 'task_detail' task.pk %}">{{ task.name }}</a></p>
-            <div>
-                {% mathjax_scripts %}
-                {{ task.short_description | safe }}
-            </div>
-            <div>
-            {% comment %}
-                {% if not task|basket_task_exist:request.basket %}
-                    {% include 'basket/_add_to_basket.html' with task=task %}
-                {% else %}
-                    {% include 'basket/_remove_from_basket.html' with task=task.id %}
-                {% endif %}
-            {% endcomment %}
+{% block left_sidebar %}
+    <form method="get" action=".">
+        {{ filter.form.as_p }}
+        {% csrf_token %}
+        <button type="submit">фильтровать</button>
+    </form>
+{% endblock %}
 
-                {% include 'basket/_add_to_basket.html' with task=task %}
+{% block content %}
+    {% for task in filter.qs %}
+        <div class="container-fluid">
+            <div class="row">
+                <h3><a href="{% url 'task_detail' task.pk %}">{{ task.name }}</a></h3>
+                <div>
+                    {% mathjax_scripts %}
+                    {{ task.short_description | safe }}
+                </div>
+                <div>
+                    {% include 'basket/_add_to_basket.html' with task=task %}
+                </div>
             </div>
         </div>
     {% endfor %}
-
-    {% comment  %} TODO: maket ajax add to basket {% endcomment %}
 
 {% endblock content %}
 
@@ -42,9 +42,10 @@
                     url: url,
                     method: 'POST',
                     data: $parent.serialize(),
+                    dataType: 'json',
                     success: function (data) {
                         $btn.attr('disabled', '');
-                        $basket.text('Корзина '+data);
+                        $basket.text('Корзина: '+ data['basket_price']);
                     },
                     error: function () {
                         alert('Извините сейчас на сервере небольшие проблемы, перезагрузите страницу или попробуйте позже')
