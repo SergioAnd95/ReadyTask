@@ -12,13 +12,10 @@ class TaskListView(FilterView):
     """
     View to display list of task
     """
-    model = Task
     filterset_class = FilterForm
     template_name = "tasks/tasks_list.html"
     context_object_name = 'tasks'
-    paginated_by = 10
-
-
+    paginate_by = 10
 
 
 class TaskDetailView(DetailView):
