@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods, require_POST
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import TemplateView
 
@@ -26,7 +26,7 @@ def add_task_to_basket(request, pk):
     task = get_object_or_404(Task, pk=pk)
     request.basket.add_task(task)
     if request.is_ajax():
-        return HttpResponse(request.basket.total_price_currency)
+        return JsonResponse({'basket_price': request.basket.total_price_currency})
     else:
         success_url = request.META['HTTP_REFERER']
         return redirect(success_url)
@@ -44,7 +44,7 @@ def remove_task_from_basket(request, pk):
     basket_line = get_object_or_404(request.basket.lines, task__pk=pk)
     basket_line.delete()
     if request.is_ajax():
-        return HttpResponse(request.basket.total_price_currency)
+        return JsonResponse({'basket_price': request.basket.total_price_currency})
     else:
         success_url = request.META['HTTP_REFERER']
         return redirect(success_url)
