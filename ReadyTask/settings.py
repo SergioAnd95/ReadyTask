@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # own apps
     'tasks',
     'basket',
+    'url_tools',
 ]
 
 MIDDLEWARE = [
@@ -178,6 +179,9 @@ BASKET_COOKIE_LIFETIME = 604800
 
 CURRENCY = ('UAH', 'грн.')
 
+# HTML2PDF settings
+
+WKHTMLTOPDF_PATH = ''
 
 
 try:

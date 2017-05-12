@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'layout_2.html' %}
 
 {% block content %}
     {% if request.basket.lines.all %}
         {% for line in request.basket.lines.all %}
             <div class="row">
                 <div class="col-xs-11">
-                    <p><a href="{% url 'task_detail' line.task.pk %}">{{ line.task.name }}</a></p>
+                    <h4><a href="{% url 'task_detail' line.task.pk %}">{{ line.task.name }}</a></h4>
                     <div>
                         {{ line.task.short_description|safe }}
                     </div>
@@ -17,7 +17,50 @@
             </div>
         {% endfor %}
     {% else %}
-        <p>Ваша корзина пуста </p>
+        <p>Ваша корзина пуста</p>
     {% endif %}
 
 {% endblock content %}
+
+{% block extra_scripts %}
+    <script type="text/javascript">
+
+        function isEmpty( el ){
+            return !$.trim(el.html())
+        }
+
+        $(document).ready(function () {
+            $basket = $('#basket_top');
+
+            $(".btn_form").on("click", function (e) {
+                e.preventDefault();
+
+                $parent = $(this).parent();
+                $row = $(this).parents('.row');
+                $container = $row.parent();
+                console.log($container);
+                $btn = $(this);
+
+                var url = $parent.attr('action');
+                var method = $parent.attr('method');
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: $parent.serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                        $row.remove();
+                        $basket.text('Корзина: '+ data['basket_price']);
+                        if(isEmpty($container)){
+                            $container.append('<p>Ваша корзина пуста</p>')
+                        }
+                    },
+                    error: function () {
+                        alert('Извините сейчас на сервере небольшие проблемы, перезагрузите страницу или попробуйте позже')
+                    }
+                });
+            })
+        })
+    </script>
+{% endblock extra_scripts %}

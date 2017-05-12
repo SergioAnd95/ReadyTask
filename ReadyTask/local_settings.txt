@@ -10,3 +10,5 @@ DATABASES = {
         'PASSWORD': 'database_password',
     }
 }
+
+WKHTMLTOPDF_PATH = '/usr/local/bin/wkhtmltopdf'

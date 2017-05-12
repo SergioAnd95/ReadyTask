@@ -14,19 +14,13 @@
 
         {% endblock extra_styles %}
     </head>
-    <body>
+    <body class="{% block body_cls %}{% endblock %}">
         {% include 'partials/navbar.html' %}
 
         <div class="container">
-            <div class="col-sm-3">
-                {% block left_sidebar %}
-                
-                {% endblock %}
-            </div>
-            <div class="col-sm-offset-1 col-sm-8">
-                {% block content %}
-                {% endblock content %}
-            </div>
+            {% block container %}
+
+            {% endblock %}
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

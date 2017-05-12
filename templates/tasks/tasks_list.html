@@ -1,16 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'layout_1.html' %}
 {% load mathjax %}
 
 {% block left_sidebar %}
     <form method="get" action=".">
-        {{ filter.form.as_p }}
-        {% csrf_token %}
-        <button type="submit">фильтровать</button>
+        {{ filter.form}}
+        <button class="btn" type="submit">фильтровать</button>
     </form>
 {% endblock %}
 
 {% block content %}
-    {% for task in filter.qs %}
+    {% for task in tasks %}
         <div class="container-fluid">
             <div class="row">
                 <h3><a href="{% url 'task_detail' task.pk %}">{{ task.name }}</a></h3>
@@ -24,6 +23,12 @@
             </div>
         </div>
     {% endfor %}
+
+    <div>
+        {% if is_paginated %}
+            {% include 'partials/pagination.html' %}
+        {% endif %}
+    </div>
 
 {% endblock content %}
 
